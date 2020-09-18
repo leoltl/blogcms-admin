@@ -4,41 +4,55 @@ export default function TokenManager(mainAxiosInstance) {
   let _token;
   let _tokenExpiresAt;
 
-  const _axios = axios.create({
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
-  }); 
+  // load token from localstorage on fresh app load
+  let savedToken = localStorage.getItem('token')
+  if (savedToken !== null && rememberTokenPreference()) {
+    set(savedToken, rememberTokenPreference());
+  }
 
-  function set(token) {
-    // save token in memory and set token to axios instance which is used across the app  
+  function rememberTokenPreference() {
+    const string = localStorage.getItem('remember-token');
+    return string.toLowerCase() === 'true';
+  }
+
+  function set(token, remember=false) {
+    /* save token in memory and set auth header with token to the axios instance
+    which is used across the app */
     _token = token;
     _tokenExpiresAt = JSON.parse(atob(token.split('.')[1])).exp;
     mainAxiosInstance.defaults.headers.common['Authorization'] = token;
+    localStorage.setItem('remember-token', remember)
+    if (remember) {
+      localStorage.setItem('token', token)
+    } else {
+      localStorage.removeItem('token')
+    }
   }
 
-  async function autoRefresh(config) {
-    if (!_token) return config;
-
-    if (!_tokenExpiresAt) {
-      _tokenExpiresAt = JSON.parse(atob(_token.split('.')[1])).exp;
-    }
+  async function autoRefresh(refreshUrl) {
+    if (!_token) return;
 
     const expiresInLessThanFiveMinutes = (_tokenExpiresAt - Date.now() / 1000) < 5 * 60;
     if (expiresInLessThanFiveMinutes) {
       /* use another axios instance to refresh token in background (avoid triggering cyclical 
       token refresh from axios instance request interceptor) */
-      _axios.post('/api/refresh', null, { headers : { 'Authorization': _token }})
+      axios.post(refreshUrl, null, { headers : { 'Authorization': _token }})
         .then(res => {
-          set(res.data.token);
+          set(res.data.token, rememberTokenPreference());
         }).catch(error => {
           console.log('refresh error', error)
         })
     }
-    
-    return config;
   }
 
   return {
     autoRefresh,
     set,
+    get isAuthenticated() {
+      if (process.env.REACT_APP_ENV === 'development') {
+        return true;
+      }
+      return Boolean(_token);
+    }
   };
 }

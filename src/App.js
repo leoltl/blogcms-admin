@@ -1,21 +1,18 @@
 import React from 'react';
-import useFetchData from './Hooks/useFetchData';
-import API from './RemoteAPI/API';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './Pages/Home';
+import Login from './Pages/Login';
+import PrivateRoute from './Components/PrivateRoute';
 
 function App() {
-  const { data, loading, error } = useFetchData(API.listPosts);
-  
-  async function handleSignin() {
-    const { data: { token } } = await API.signin('admin', 'password');
-    console.log(token);
-  }
-  
   return (
     <main className="app">
-      { JSON.stringify(data) }
-      { JSON.stringify(loading) }
-      { JSON.stringify(error) }
-      <button onClick={handleSignin}>Signin</button>
+      <Router>
+        <Switch>
+          <PrivateRoute path="/admin" component={Home} />
+          <Route path="/" component={Login} />
+        </Switch>
+      </Router>
     </main> 
   );
 }

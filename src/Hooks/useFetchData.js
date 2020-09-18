@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function useFetchData(apiMethod, ...params) {
   const [data, setData] = useState(null);
