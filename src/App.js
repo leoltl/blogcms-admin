@@ -1,25 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import useFetchData from './Hooks/useFetchData';
+import API from './RemoteAPI/API';
 
 function App() {
+  const { data, loading, error } = useFetchData(API.listPosts);
+  
+  async function handleSignin() {
+    const { data: { token } } = await API.signin('admin', 'password');
+    console.log(token);
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="app">
+      { JSON.stringify(data) }
+      { JSON.stringify(loading) }
+      { JSON.stringify(error) }
+      <button onClick={handleSignin}>Signin</button>
+    </main> 
   );
 }
 
