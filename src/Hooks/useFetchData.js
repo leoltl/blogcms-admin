@@ -18,7 +18,7 @@ function useFetchData(apiMethod, ...params) {
       }
     }())
 
-  }, [apiMethod])
+  }, [apiMethod, ...params])
 
   return {
     data,

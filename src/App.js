@@ -6,14 +6,14 @@ import PrivateRoute from './Components/PrivateRoute';
 
 function App() {
   return (
-    <main className="app">
+    <div className="app">
       <Router>
         <Switch>
           <PrivateRoute path="/admin" component={Home} />
-          <Route path="/" component={Login} />
+          <Route path="/" exact={true} component={Login} />
         </Switch>
       </Router>
-    </main> 
+    </div> 
   );
 }
 

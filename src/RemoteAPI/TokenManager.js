@@ -7,7 +7,14 @@ export default function TokenManager(mainAxiosInstance) {
   // load token from localstorage on fresh app load
   let savedToken = localStorage.getItem('token')
   if (savedToken !== null && rememberTokenPreference()) {
-    set(savedToken, rememberTokenPreference());
+    _tokenExpiresAt = JSON.parse(atob(savedToken.split('.')[1])).exp;
+    const expired = (_tokenExpiresAt - Date.now() / 1000) <= 0;
+    
+    if (expired) {
+      localStorage.removeItem('token');
+    } else {
+      set(savedToken, rememberTokenPreference());
+    }
   }
 
   function rememberTokenPreference() {
@@ -45,13 +52,20 @@ export default function TokenManager(mainAxiosInstance) {
     }
   }
 
+  function clear() {
+    _token = undefined;
+    localStorage.removeItem('token')
+    localStorage.removeItem('remember-token')
+  }
+
   return {
     autoRefresh,
     set,
+    clear,
     get isAuthenticated() {
-      if (process.env.REACT_APP_ENV === 'development') {
-        return true;
-      }
+      // if (process.env.REACT_APP_ENV === 'development') {
+      //   return true;
+      // }
       return Boolean(_token);
     }
   };

@@ -17,18 +17,21 @@ function makeAPI() {
   const postCache = Cache();
   
   function listPosts() {
-    if (!postCache.isEmpty()) {
+    if (!postCache.needFullFetch()) {
       return Promise.resolve({ data: postCache.get() })
     }
 
     return axiosInstance.get('/api/posts')
       .then(res => {
-        postCache.setArray(res.data);
+        postCache.setArray(res.data, { fullFetch: true });
         return res;
       });
   }
   
   function detailPosts(id) {
+    if (id === undefined) {
+      return Promise.resolve({ data: { title: "", body: "" }})
+    }
     if (postCache.has(id)) {
       return Promise.resolve({ data: postCache.get(id) });
     }
@@ -36,6 +39,22 @@ function makeAPI() {
       .then(res => {
         postCache.set(id, res.data);
         return res;
+      });
+  }
+
+  function updatePost(id, post) {
+    return axiosInstance.put(`/api/posts/${id}`, { ...post})
+      .then(res => {
+        postCache.set(id, res.data);
+        return res
+      });
+  }
+
+  function createPost(post) {
+    return axiosInstance.post(`/api/posts`, {...post})
+      .then(res => {
+        postCache.set(res.data._id, res.data)
+        return res
       });
   }
 
@@ -48,10 +67,17 @@ function makeAPI() {
     })
   }
 
+  function signout() {
+    tokenManager.clear()
+  }
+
   return {
     listPosts,
     detailPosts,
+    updatePost,
+    createPost,
     signin,
+    signout,
   }
 };
 

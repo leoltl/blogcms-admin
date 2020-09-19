@@ -132,7 +132,7 @@ function SignInSide({ formState, handleFormInput, handleFormSubmit, authError, h
   );
 }
 
-function SignIn(props) {
+function SigninContainer({ history }) {
   const [formState, setFormState] = useState({ username: '', password: '', remember: false });
   const [authError, setAuthError] = useState(null);
 
@@ -140,7 +140,7 @@ function SignIn(props) {
     e.preventDefault();
     try {
       await API.signin(formState.username, formState.password, formState.remember);
-      props.history.push('/admin')
+      history.push('/admin')
     } catch (e) {
       setAuthError({ message: e.response.data.message })
       setFormState({...formState, password: '' })
@@ -163,4 +163,4 @@ function SignIn(props) {
   )
 }
 
-export default withRouter(SignIn);
+export default withRouter(SigninContainer);

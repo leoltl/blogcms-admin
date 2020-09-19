@@ -1,5 +1,6 @@
 export default function Cache() {
   let _cache = {}
+  let _fullFetch = false;
   
   function get(id=null) {
     if (id === null) {
@@ -16,10 +17,20 @@ export default function Cache() {
     }
   }
 
-  function setArray(items) {
+  function setArray(items, { getKey=(i) => i._id, fullFetch=false }) {
+    let _getkey;
+    if (typeof getKey === 'function') {
+      _getkey=getKey
+    } else {
+      throw Error('Argument for getKey should be a function')
+    }
+
+    if (fullFetch) {
+      _fullFetch = true;
+    }
+
     for (let item of items) {
-      console.log(item)
-      _cache[item._id] = item
+      _cache[_getkey(item)] = item
     }
   }
 
@@ -27,8 +38,8 @@ export default function Cache() {
     return key in _cache;
   }
   
-  function isEmpty() {
-    return Object.keys(_cache).length === 0;
+  function needFullFetch() {
+    return !_fullFetch || Object.keys(_cache).length === 0;
   }
 
   return {
@@ -36,6 +47,6 @@ export default function Cache() {
     set,
     setArray,
     has,
-    isEmpty,
+    needFullFetch,
   }
 }
