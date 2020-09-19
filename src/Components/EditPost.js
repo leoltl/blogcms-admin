@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function EditPost({ post, isEdit, handleFormInput, handleSave, handleUnpublish, published, loading }) {
+function EditPost({ post, isEdit, handleInputChange, handleSave, handleUnpublish, published, loading }) {
   const classes = useStyles();
   const header = (isEdit ? 'Edit': 'Create New') + ' Post'
   return (
@@ -35,9 +35,10 @@ function EditPost({ post, isEdit, handleFormInput, handleSave, handleUnpublish, 
                 label="Blog Post Title"
                 name="title"
                 multiline
+                fullWidth
                 rowsMax={4}
                 value={post.title}
-                onChange={handleFormInput}
+                onChange={handleInputChange}
                 InputLabelProps={{ shrink:  Boolean(post.title) }} 
               />
 
@@ -51,7 +52,7 @@ function EditPost({ post, isEdit, handleFormInput, handleSave, handleUnpublish, 
                 rows={4}
                 rowsMax={10}
                 value={post.body}
-                onChange={handleFormInput}
+                onChange={handleInputChange}
                 InputLabelProps={{ shrink: Boolean(post.body) }} 
               />
 
@@ -136,7 +137,7 @@ function EditPostContainer({ history }) {
     }
   }
 
-  function handleFormInput(e) {
+  function handleInputChange(e) {
     setPostState({ ...postState, [e.target.name]: e.target.value });
   }
 
@@ -145,7 +146,7 @@ function EditPostContainer({ history }) {
       post={postState}
       isEdit={Boolean(id)}
       published={Boolean(post?.published)}
-      handleFormInput={handleFormInput}
+      handleInputChange={handleInputChange}
       handleSave={handleSave}
       handleUnpublish={handleUnpublish}
       loading={loading}
