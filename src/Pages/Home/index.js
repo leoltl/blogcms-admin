@@ -20,7 +20,7 @@ import Link from '@material-ui/core/Link';
 
 import Posts from '../Posts';
 import Comments from '../Comments';
-import EditPost from '../../Components/EditPost';
+import EditPost from '../EditPost';
 import API from '../../RemoteAPI/API';
 
 const drawerWidth = 240;

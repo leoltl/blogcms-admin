@@ -30,7 +30,11 @@ function Posts({ data, loading, error, editPost }) {
             <Typography variant="h2" className={classes.header}>
               Your Posts
             </Typography>
-            <TablePaginator rows={data} editPost={editPost} component={PostTable} />
+            <TablePaginator
+              rows={data}
+              editPost={editPost}
+              component={PostTable} 
+            />
           </>
         )
       }

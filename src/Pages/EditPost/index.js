@@ -1,10 +1,10 @@
 import { Button, Container, makeStyles, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
-import useFetchData from '../Hooks/useFetchData';
-import API from '../RemoteAPI/API';
+import useFetchData from '../../Hooks/useFetchData';
+import API from '../../RemoteAPI/API';
 
-import Editor from './Editor';
+import Editor from '../../Components/Editor';
 
 const useStyles = makeStyles((theme) => ({
   submit: {

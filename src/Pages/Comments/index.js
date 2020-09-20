@@ -36,7 +36,11 @@ function Comments({ data, loading, error, editComment, open, handleClickOpen, ha
             <Typography variant="h2" className={classes.header}>
               Comments
             </Typography>
-            <TablePaginator rows={data} handleClickOpen={handleClickOpen} component={CommentTable} />
+            <TablePaginator
+              rows={data}
+              handleClickOpen={handleClickOpen}
+              component={CommentTable} 
+            />
             <Dialog
               open={open}
               TransitionComponent={Transition}
