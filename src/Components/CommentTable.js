@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { Link, TablePagination } from '@material-ui/core';
-import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
@@ -29,18 +29,9 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SimpleTable({ rows, handleClickOpen }) {
+export default function SimpleTable({ rows, handleClickOpen, handleChangePage, handleChangeRowsPerPage, rowsPerPage, page, count }) {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  
 
   return (
     <>
@@ -56,42 +47,38 @@ export default function SimpleTable({ rows, handleClickOpen }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows && 
-              rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                <TableRow className={classes.row} key={row._id} onClick={() => handleClickOpen(row._id)}>
-                  <TableCell component="th" scope="row">
-                    {row.commenter}
-                  </TableCell>
-                  <TableCell>
-                    {row.published ? <CheckCircleOutlineIcon className={classes.good} /> : <HighlightOffIcon color="error" className={classes.icon}/>}
-                  </TableCell>
-                  <TableCell>
-                  {row.body}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="body2">
-                      <Link to={`/admin/posts/edit/${row.post._id}`} component={RouterLink}>
-                        {row.post.title}
-                      </Link>
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="body2">
-                      {new Date(row.created_at).toDateString()}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              ))
-            }
+            {rows && rows.map((row) => (
+              <TableRow className={classes.row} key={row._id} onClick={() => handleClickOpen(row._id)}>
+                <TableCell component="th" scope="row">
+                  {row.commenter}
+                </TableCell>
+                <TableCell>
+                  {row.published ? <CheckCircleOutlineIcon className={classes.good} /> : <HighlightOffIcon color="error" className={classes.icon}/>}
+                </TableCell>
+                <TableCell>
+                {row.body}
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="body2">
+                    <Link to={`/admin/posts/edit/${row.post._id}`} component={RouterLink}>
+                      {row.post.title}
+                    </Link>
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="body2">
+                    {new Date(row.created_at).toDateString()}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows?.length || 0}
+        count={count}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

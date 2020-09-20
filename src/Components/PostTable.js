@@ -19,18 +19,8 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SimpleTable({ rows, editPost }) {
+export default function SimpleTable({ rows, editPost, handleChangePage, handleChangeRowsPerPage, rowsPerPage, page, count}) {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
   return (
     <>
       <TableContainer component={Paper}>
@@ -44,35 +34,31 @@ export default function SimpleTable({ rows, editPost }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows && 
-            rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow hover className={classes.row} key={row._id} onClick={editPost(row._id)}>
-                  <TableCell component="th" scope="row">
-                    {row.title}
-                  </TableCell>
-                  <TableCell align="right">{row.author.username}</TableCell>
-                  <TableCell align="right">
-                    <Typography variant="body2">
-                      {new Date(row.created_at).toLocaleString()}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="body2">
-                      {row.published ? "Published" : "Unpublished"}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              ))
-            }
+            {rows && rows.map((row) => (
+              <TableRow hover className={classes.row} key={row._id} onClick={editPost(row._id)}>
+                <TableCell component="th" scope="row">
+                  {row.title}
+                </TableCell>
+                <TableCell align="right">{row.author.username}</TableCell>
+                <TableCell align="right">
+                  <Typography variant="body2">
+                    {new Date(row.created_at).toLocaleString()}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="body2">
+                    {row.published ? "Published" : "Unpublished"}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
       rowsPerPageOptions={[5, 10, 25]}
       component="div"
-      count={rows?.length || 0}
+      count={count}
       rowsPerPage={rowsPerPage}
       page={page}
       onChangePage={handleChangePage}

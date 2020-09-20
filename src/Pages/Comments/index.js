@@ -12,6 +12,7 @@ import Slide from '@material-ui/core/Slide';
 import { Box, CircularProgress, makeStyles, Typography } from '@material-ui/core';
 
 import CommentTable from '../../Components/CommentTable';
+import TablePaginator from '../../Components/TablePaginator';
 
 const useStyles = makeStyles((theme) => ({
     tableWrapper: {
@@ -35,7 +36,7 @@ function Comments({ data, loading, error, editComment, open, handleClickOpen, ha
             <Typography variant="h2" className={classes.header}>
               Comments
             </Typography>
-            <CommentTable rows={data} handleClickOpen={handleClickOpen} />
+            <TablePaginator rows={data} handleClickOpen={handleClickOpen} component={CommentTable} />
             <Dialog
               open={open}
               TransitionComponent={Transition}

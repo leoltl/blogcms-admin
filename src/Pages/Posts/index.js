@@ -2,9 +2,11 @@ import React from 'react';
 import API from '../../RemoteAPI/API';
 import useFetchData from '../../Hooks/useFetchData';
 
-import PostTable from '../../Components/PostTable';
 import { Box, CircularProgress, makeStyles, Typography } from '@material-ui/core';
 import { useRouteMatch, withRouter } from 'react-router-dom';
+
+import PostTable from '../../Components/PostTable';
+import TablePaginator from '../../Components/TablePaginator';
 
 const useStyles = makeStyles((theme) => ({
     tableWrapper: {
@@ -28,7 +30,7 @@ function Posts({ data, loading, error, editPost }) {
             <Typography variant="h2" className={classes.header}>
               Your Posts
             </Typography>
-            <PostTable rows={data} editPost={editPost} />
+            <TablePaginator rows={data} editPost={editPost} component={PostTable} />
           </>
         )
       }
