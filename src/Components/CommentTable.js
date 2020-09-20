@@ -27,6 +27,11 @@ const useStyles = makeStyles({
   good: {
     color: 'green',
     opacity: 0.4,
+  },
+  comments: {
+    maxWidth: '450px',
+    fontSize: '0.8rem',
+    wordWrap: 'break-word'  
   }
 });
 
@@ -64,8 +69,8 @@ export default function SimpleTable({ rows, handleClickOpen, handleChangePage, h
                     )
                   }
                 </TableCell>
-                <TableCell>
-                {row.body}
+                <TableCell className={classes.comments}>
+                  {row.body}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {row.commenter}
