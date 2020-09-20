@@ -8,6 +8,9 @@ The app contains protected and unprotected application routes. Authentication is
 
 API calls are cached to save unnecessary server calls for repeated page visits (within a session).
 
+
+![blogcms-admin](public/screenshot-2.png )
+
 It is part of the headless cms system.
 
 View **CMS-client** [here](https://github.com/leoltl/blogcms-client)
