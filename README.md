@@ -22,7 +22,9 @@ View **CMS-api** [here](https://github.com/leoltl/blogcms-api)
 - **UI library**: Material UI, tinymce editor
 
 ## Live App
-**View it on [here](https://leoltl-blogcms-admin.herokuapp.com/)**
+**View this app (admin) on [here](https://leoltl-blogcms-admin.herokuapp.com/)**
+
+**View client app [here](https://leoltl-blogcms-client.herokuapp.com/)**
 
 **Sample profiles**
 
