@@ -1,68 +1,43 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# blogcms-admin
 
-## Available Scripts
+![blogcms-admin](public/screenshot-1.png )
 
-In the project directory, you can run:
+Cms-admin is an app built with React which manages the content stored in blogcms-api server. Users can view all blog posts and all the comments. Admin user can publish/unpublish content on the blog. Create new posts, edit published or unpublished post, hide and unhide user comments. 
 
-### `npm start`
+The app contains protected and unprotected application routes. Authentication is done using Json Web Token where user have a choice to store token in localStorage(does not need to re-authenticate every visit) or in memory (for better security).
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+API calls are cached to save unnecessary server calls for repeated page visits (within a session).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+It is part of the headless cms system.
 
-### `npm test`
+View **CMS-client** [here](https://github.com/leoltl/blogcms-client)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+View **CMS-api** [here](https://github.com/leoltl/blogcms-api)
 
-### `npm run build`
+## The stack
+- **Client side**: React (hooks), React router dom
+- **UI library**: Material UI, tinymce editor
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Live App
+**View it on [here](https://leoltl-blogcms-admin.herokuapp.com/)**
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+**Sample profiles**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+|username|password|
+|---|---|
+|admin|password|
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Features
+**As an unauthenticated user**:
+- I can see login page which allows me to put in credentials to login.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**As an authenticated user**:
+- I can see all blog posts that I have published or saved as draft.
+- I can create new post, edit existing post, and have the option to publish or save as draft.
+- I can unpublish/ unapprove blog post or user comments to stop them from showing on the client site.
+- I can see all comments that other user posts.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+#### TODO
+- support posting of images in comments
+- add analytics calls to record post views
