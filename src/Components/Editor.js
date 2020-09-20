@@ -8,9 +8,9 @@ function PostEditor({ handleInputChange, initialValue }) {
   }
   return (
     <Editor
-      initialValue={initialValue}
+      value={initialValue}
+      apiKey={process.env.REACT_APP_TINYMCE}
       init={{
-        apiKey: process.env.REACT_APP_TINYMCE,
         height: 500,
         menubar: false,
         plugins: [
