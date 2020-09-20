@@ -2,8 +2,6 @@
 
 ![blogcms-admin](public/screenshot-1.png )
 
-Headless blog CMS has an express server (api) that serves content, a Vue app (client) for rendering content and a React app (admin) for managing the content in the server (ie blog posts and comments). The system is communicating using REST API calls over HTTP.
-
 Cms-admin is an app built with React which manages the content stored in blogcms-api server. Users can view all blog posts and all the comments. Admin user can publish/unpublish content on the blog. Create new posts, edit published or unpublished post, hide and unhide user comments. 
 
 The app contains protected and unprotected application routes. Authentication is done using Json Web Token where user have a choice to store token in localStorage(does not need to re-authenticate every visit) or in memory (for better security).
@@ -14,6 +12,8 @@ API calls are cached to save unnecessary server calls for repeated page visits (
 ![blogcms-admin](public/screenshot-2.png )
 
 It is part of the headless cms system.
+
+Headless blog CMS has an express server (api) that serves content, a Vue app (client) for rendering content and a React app (admin) for managing the content in the server (ie blog posts and comments). The system is communicating using REST API calls over HTTP.
 
 View **CMS-client** [here](https://github.com/leoltl/blogcms-client)
 
