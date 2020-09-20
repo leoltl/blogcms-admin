@@ -4,6 +4,8 @@ import { useParams, withRouter } from 'react-router-dom';
 import useFetchData from '../Hooks/useFetchData';
 import API from '../RemoteAPI/API';
 
+import Editor from './Editor';
+
 const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(1.5, 0, 0),
@@ -42,20 +44,11 @@ function EditPost({ post, isEdit, handleInputChange, handleSave, handleUnpublish
                 InputLabelProps={{ shrink:  Boolean(post.title) }} 
               />
 
-              <TextField 
-                id="body"
-                className={classes.input}
-                label="Blog Post Body"
-                name="body"
-                multiline
-                fullWidth
-                rows={4}
-                rowsMax={10}
-                value={post.body}
-                onChange={handleInputChange}
-                InputLabelProps={{ shrink: Boolean(post.body) }} 
+              <Editor 
+                handleInputChange={handleInputChange}
+                initialValue={post.body}
               />
-
+              
               <Container maxWidth="sm">
                 <Button
                   fullWidth
