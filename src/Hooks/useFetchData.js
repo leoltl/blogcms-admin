@@ -5,7 +5,9 @@ function useFetchData(apiMethod, ...params) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  
   useEffect(() => {
+    console.log('refresh');
     (async function(){
       setLoading(true);
       try {

@@ -15,6 +15,27 @@ axiosInstance.interceptors.request.use((config) => {
 
 function makeAPI() {
   const postCache = Cache();
+  const commentsCache = Cache();
+
+  function listComments() {
+    if (!commentsCache.needFullFetch()) {
+      return Promise.resolve({ data: commentsCache.get() })
+    }
+
+    return axiosInstance.get('/api/comments')
+      .then(res => {
+        commentsCache.setArray(res.data, { fullFetch: true });
+        return res
+      });
+  }
+
+  function updateComment(id, published) {
+    return axiosInstance.put(`/api/comments/${id}`, { published: Boolean(published) })
+      .then((res) => {
+        commentsCache.set(res.data._id, res.data);
+        console.log('done')
+      })
+  }
   
   function listPosts() {
     if (!postCache.needFullFetch()) {
@@ -43,7 +64,7 @@ function makeAPI() {
   }
 
   function updatePost(id, post) {
-    return axiosInstance.put(`/api/posts/${id}`, { ...post})
+    return axiosInstance.put(`/api/posts/${id}`, post)
       .then(res => {
         postCache.set(id, res.data);
         return res
@@ -51,7 +72,7 @@ function makeAPI() {
   }
 
   function createPost(post) {
-    return axiosInstance.post(`/api/posts`, {...post})
+    return axiosInstance.post(`/api/posts`, post)
       .then(res => {
         postCache.set(res.data._id, res.data)
         return res
@@ -72,6 +93,8 @@ function makeAPI() {
   }
 
   return {
+    listComments,
+    updateComment,
     listPosts,
     detailPosts,
     updatePost,

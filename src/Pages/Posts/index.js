@@ -3,7 +3,7 @@ import API from '../../RemoteAPI/API';
 import useFetchData from '../../Hooks/useFetchData';
 
 import PostTable from '../../Components/PostTable';
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, CircularProgress, makeStyles, Typography } from '@material-ui/core';
 import { useRouteMatch, withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,19 +20,19 @@ const useStyles = makeStyles((theme) => ({
 function Posts({ data, loading, error, editPost }) {
   const classes = useStyles()
   return (
-    <>
+    <Box className={classes.tableWrapper}>
       { loading
-        ? `loading...`
+        ? <CircularProgress />
         : (
-          <Box className={classes.tableWrapper}>
+          <>
             <Typography variant="h2" className={classes.header}>
               Your Posts
             </Typography>
             <PostTable rows={data} editPost={editPost} />
-          </Box>
+          </>
         )
       }
-    </>
+    </Box>
   )
 }
 

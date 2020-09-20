@@ -15,9 +15,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import NoteIcon from '@material-ui/icons/Note';
+import CommentIcon from '@material-ui/icons/Comment';
 import Link from '@material-ui/core/Link';
 
 import Posts from '../Posts';
+import Comments from '../Comments';
 import EditPost from '../../Components/EditPost';
 import API from '../../RemoteAPI/API';
 
@@ -87,6 +89,14 @@ function Home({ path, url, handleSignout }) {
                 <ListItemText primary='Posts' />
               </ListItem>
             </Link>
+            <Link to={`${url}/comments`} color="inherit" component={RouterLink}>
+              <ListItem button key='Comments'>
+                <ListItemIcon>
+                  <CommentIcon />
+                </ListItemIcon>
+                <ListItemText primary='Comments' />
+              </ListItem>
+            </Link>
           </List>
           <Divider />
           <List>
@@ -116,6 +126,9 @@ function Home({ path, url, handleSignout }) {
             </Route>
             <Route path={`${path}/posts`}>
               <Posts />
+            </Route>
+            <Route path={`${path}/comments`}>
+              <Comments />
             </Route>
           </Switch>
 

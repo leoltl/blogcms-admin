@@ -7,8 +7,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import TablePagination from '@material-ui/core/TablePagination'
 import Typography from '@material-ui/core/Typography';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { Link, TablePagination } from '@material-ui/core';
+import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
@@ -16,10 +19,17 @@ const useStyles = makeStyles({
   },
   row: {
     cursor: 'pointer',
+  },
+  icon: {
+    opacity: 0.4,
+  },
+  good: {
+    color: 'green',
+    opacity: 0.4,
   }
 });
 
-export default function SimpleTable({ rows, editPost }) {
+export default function SimpleTable({ rows, handleClickOpen }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -31,36 +41,45 @@ export default function SimpleTable({ rows, editPost }) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   return (
     <>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell align="right">Author</TableCell>
-              <TableCell align="right">Date</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell>Author</TableCell>
+              <TableCell></TableCell>
+              <TableCell>Comment</TableCell>
+              <TableCell align="right">In response to</TableCell>
+              <TableCell align="right">Submitted on</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows && 
-            rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow hover className={classes.row} key={row._id} onClick={editPost(row._id)}>
+              rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => (
+                <TableRow className={classes.row} key={row._id} onClick={() => handleClickOpen(row._id)}>
                   <TableCell component="th" scope="row">
-                    {row.title}
+                    {row.commenter}
                   </TableCell>
-                  <TableCell align="right">{row.author.username}</TableCell>
+                  <TableCell>
+                    {row.published ? <CheckCircleOutlineIcon className={classes.good} /> : <HighlightOffIcon color="error" className={classes.icon}/>}
+                  </TableCell>
+                  <TableCell>
+                  {row.body}
+                  </TableCell>
                   <TableCell align="right">
                     <Typography variant="body2">
-                      {new Date(row.created_at).toLocaleString()}
+                      <Link to={`/admin/posts/edit/${row.post._id}`} component={RouterLink}>
+                        {row.post.title}
+                      </Link>
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
                     <Typography variant="body2">
-                      {row.published ? "Published" : "Unpublished"}
+                      {new Date(row.created_at).toDateString()}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -70,14 +89,14 @@ export default function SimpleTable({ rows, editPost }) {
         </Table>
       </TableContainer>
       <TablePagination
-      rowsPerPageOptions={[5, 10, 25]}
-      component="div"
-      count={rows?.length || 0}
-      rowsPerPage={rowsPerPage}
-      page={page}
-      onChangePage={handleChangePage}
-      onChangeRowsPerPage={handleChangeRowsPerPage}
-    />
-  </>
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={rows?.length || 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </>
   );
 }
