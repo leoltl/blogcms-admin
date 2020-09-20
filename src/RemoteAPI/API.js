@@ -2,9 +2,7 @@ import axios from 'axios';
 import TokenManager from './TokenManager';
 import Cache from './Cache';
 
-const baseURL = process.env.BASE_URL || 'http://localhost:3000'
-
-console.log('!!!!!!!!!!!!', process.env.BASE_URL)
+const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000'
 
 const axiosInstance = axios.create({ baseURL }); 
 
