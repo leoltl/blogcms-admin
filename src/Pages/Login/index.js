@@ -19,14 +19,23 @@ import { Snackbar } from '@material-ui/core';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <>
+      <Typography variant="body1" color="textSecondary" align="center">
+       demo account: 
+      </Typography>
+      <Typography variant="body2" color="textSecondary" align="center">
+        username: admin <br /> password: password
+      </Typography>
+      <br />
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://material-ui.com/">
+          Your Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    </>
   );
 }
 
