@@ -4,6 +4,8 @@ import Cache from './Cache';
 
 const baseURL = process.env.BASE_URL || 'http://localhost:3000'
 
+console.log('!!!!!!!!!!!!', process.env.BASE_URL)
+
 const axiosInstance = axios.create({ baseURL }); 
 
 export const tokenManager = TokenManager(axiosInstance);
