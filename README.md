@@ -25,6 +25,8 @@ View **CMS-api** [here](https://github.com/leoltl/blogcms-api)
 
 ## Live App
 **View this app (admin) on [here](https://leoltl-blogcms-admin.herokuapp.com/)**
+*The App is hosted on Heroku, it might take some to spin up the deno and the api deno, please wait a bit and retry if it does not work the first time*
+
 
 **View client app [here](https://leoltl-blogcms-client.herokuapp.com/)**
 
